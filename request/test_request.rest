@@ -1,0 +1,28 @@
+# POST  http://localhost:3003/api/blogs/
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY
+
+# {
+#     "title": "testing testing",
+#     "author": "Jace ",
+#     "url": "http://www.test-jace.html",
+#     "likes": 100
+# }
+
+# DELETE http://localhost:3003/api/blogs/67161b94f9c0cbae54963390
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY
+
+
+# GET http://localhost:3003/api/users/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY
+
+# DELETE http://localhost:3003/api/blogs/6713fd47725dc63a6aa7f32e
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY
+
+
+
+# GET http://localhost:3003/api/blogs/
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY
+
+# GET http://localhost:3003/api/users/

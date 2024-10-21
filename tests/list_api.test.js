@@ -27,16 +27,20 @@ describe('when there is initially some blogs saved', async () => {
             .get('/api/blogs')
             .expect(200)
             .expect('Content-Type', /application\/json/)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
           })
           
     test('Returned blogs match the initialBlog ', async () => {
-        const response = await api.get('/api/blogs')
+        const response = await api
+        .get('/api/blogs')
+        .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
         assert.strictEqual(response.body.length, helper.initialBlog.length)
     })
     
     
     test('blog posts have id instead of _id', async () => {
         const response = await api.get('/api/blogs')
+        .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
         const blog = response.body[0]
     
         assert(blog.id !== undefined, 'Blog should have an id property')
@@ -50,6 +54,7 @@ describe('when there is initially some blogs saved', async () => {
             author : 'James Friday',
             url : 'https://www.wired.com/july$Love/',
             likes : 23900
+            // user: 
         }
     
         await api
@@ -57,12 +62,35 @@ describe('when there is initially some blogs saved', async () => {
             .send(newBlog)
             .expect(201)
             .expect('Content-Type', /application\/json/)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
     
         const blogsAtEnd = await helper.blogsInDb()
         assert.strictEqual(blogsAtEnd.length, helper.initialBlog.length + 1)
     
         const contents = blogsAtEnd.map(blog => blog.title)
         assert(contents.includes('July Love'))
+    })
+
+
+    test('a valid blog can be added valid token should return 401 Unauthorised ', async () => {
+        const newBlog = {
+            title : 'July Love',
+            author : 'James Friday',
+            url : 'https://www.wired.com/july$Love/',
+            likes : 23900
+        }
+    
+        await api
+            .post(`/api/blogs`)
+            .send(newBlog)
+            .expect(401)
+            .expect('Content-Type', /application\/json/)
+            // malformed
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxYc")
+    
+        const blogsAtEnd = await helper.blogsInDb()
+        assert.strictEqual(blogsAtEnd.length, helper.initialBlog.length)
+
     })
 
     test('if likes property is missing, it defaults to 0', async () => {
@@ -77,6 +105,7 @@ describe('when there is initially some blogs saved', async () => {
             .send(newBlog)
             .expect(201)
             .expect('Content-Type', /application\/json/)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
     
         assert.strictEqual(response.body.likes, 0, 'Likes should default to 0')
     
@@ -99,6 +128,7 @@ describe('when there is initially some blogs saved', async () => {
             .post('/api/blogs')
             .send(newBlog)
             .expect(400)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
     
     })
     
@@ -107,6 +137,7 @@ describe('when there is initially some blogs saved', async () => {
         const deletedBlogId = blogsAtStart[0].id
         const response = await api.delete(`/api/blogs/${deletedBlogId}`)
             .expect(204)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
     
         const blogsAtEnd = await helper.blogsInDb()
         const contents = blogsAtEnd.map(blog => blog.title)
@@ -119,11 +150,25 @@ describe('when there is initially some blogs saved', async () => {
         const invalidId = '507f1f77bcf86cd799439011'
         const deletedBlog = await api.delete(`/api/blogs/${invalidId}`)
             .expect(404)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
     })
     
+    test('deleting a blog with an invalid token should return 401 Unauthorized', async () => {
+        const blogsAtStart = await helper.blogsInDb()
+        const deletedBlogId = blogsAtStart[0].id
+        const deletedBlog = await api.delete(`/api/blogs/${deletedBlogId}`)
+        // false token or no token at all
+            .expect(401)
+            // .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxYc")
+
+        const blogsAtEnd = await helper.blogsInDb()
+        assert.strictEqual(blogsAtEnd.length, blogsAtStart.length)
+    
+    })
     
     test('updates with status code 200 OK', async () => {
         const blogsAtStart = await api.get('/api/blogs')
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
         const blogs = blogsAtStart.body
         const updatedBlogId = blogs[0].id
         const {title ,author, url} = blogs[0]
@@ -138,8 +183,10 @@ describe('when there is initially some blogs saved', async () => {
         const updatedBlog = await api.put(`/api/blogs/${updatedBlogId}`)
             .send(blog)
             .expect(200)
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
     
         const blogsAtEnd = await api.get('/api/blogs')
+            .set("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2NzE0MDI0NjE0MTE0ZTQwYzkwZGFiODEiLCJpYXQiOjE3Mjk0MzE3MTd9.ois5yXrHzTfTGZmfgoYeNkANagyCPT9hrnyyJECODxY")
         const contents = blogsAtEnd.body
         const findUpdatedblog = contents.find(blog => blog.id === updatedBlogId)
         assert.deepStrictEqual(findUpdatedblog.likes, likes)
