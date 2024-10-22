@@ -20,7 +20,6 @@ blogRouter.post('/', async (request, response) => {
   }
 
   // 
-
   const blog = new Blog({
     title,
     author,
@@ -46,11 +45,8 @@ blogRouter.delete('/:id', async (request, response) => {
     return response.status(404).json({error: 'Blog not found'})
   }
   if (!blog.user) {
-    return response.status(401).send({error: 'Unauthorized to delete this blog'})
+    return response.status(401).send({error: 'Forbidden'})
   }
-
-  
-
 
 
   if (blog.user.toString() === user._id.toString()){
@@ -62,7 +58,7 @@ blogRouter.delete('/:id', async (request, response) => {
     // 
     return response.status(204).end()
   } else {
-    return response.status(401).json({error: 'Unauthorized to delete this blog'})
+    return response.status(403).json({error: 'Unauthorized to delete this blog'})
   }
 })
 
